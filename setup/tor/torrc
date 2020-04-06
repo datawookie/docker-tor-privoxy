@@ -1,0 +1,11 @@
+# Sample configurations can be found at https://github.com/torproject/tor/tree/master/src/config.
+
+SocksPort 0.0.0.0:9050
+
+Log notice stdout
+
+ControlPort 0.0.0.0:9051
+#
+# Write credentials to a file.
+#
+CookieAuthentication 1
