@@ -1,7 +1,10 @@
 #!/bin/sh
 
-if [ -z ${IP_CHANGE_SECONDS+x} ]; then IP_CHANGE_INTERVAL=60; fi
+if [ -z "${IP_CHANGE_SECONDS}" ]; then IP_CHANGE_SECONDS=60; fi
 
+# Send the Tor process a HUP signal periodically. This will cause it to get a
+# fresh exit IP address.
+#
 (while true; do sleep ${IP_CHANGE_SECONDS}; killall -HUP tor; done) &
 
 exec /bin/su -s /bin/sh -c "/usr/bin/tor -f /opt/tor/torrc" tor
