@@ -39,13 +39,13 @@ $ make build
 To launch the pre-built image:
 
 ```bash
-docker run -p 8888:8888 -p 9050:9050 datawookie/tor-privoxy
+docker run -p 8888:8888 -p 9050:9050 --network="host" datawookie/tor-privoxy
 ```
 
 You can also launch the image built from this repository:
 
 ```bash
-docker run -p 8888:8888 -p 9050:9050 tor-privoxy
+docker run -p 8888:8888 -p 9050:9050 --network="host" tor-privoxy
 ```
 
 Or use the `Makefile` as follow:
@@ -92,6 +92,14 @@ $ curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
 You get a different IP address when you send the request via the proxy. If you wait a while and then send the request again, you'll find that the IP address has changed.
 
 ### Python
+
+The [stem](https://stem.torproject.org/) package exposes functionality for interacting with the Tor controller interface.
+
+```bash
+pip3 install stem
+```
+
+Use the requests package to send requests via the Tor proxies.
 
 ```python
 >>> import requests
