@@ -14,6 +14,9 @@ login:
 push:
 	docker push $(IMAGE)
 
+pull:
+	docker pull $(IMAGE)
+
 # CONTAINER -------------------------------------------------------------------
 
 run:
