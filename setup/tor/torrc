@@ -1,11 +1,13 @@
 # Sample configurations can be found at https://github.com/torproject/tor/tree/master/src/config.
 
-SocksPort localhost:9050
+SocksPort 0.0.0.0:9050
 
-Log notice stdout
-
-ControlPort localhost:9051
+ControlPort 0.0.0.0:9051
 #
 # Write credentials to a file.
 #
 CookieAuthentication 1
+
+Log notice syslog
+#
+# Change 'syslog' to 'stdout' to see more logging in the terminal.

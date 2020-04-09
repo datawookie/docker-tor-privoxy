@@ -10,9 +10,9 @@ Tor provides a SOCKS proxy. We use Privoxy to add an HTTP proxy.
 
 These ports are exposed by the image:
 
-- `9050` ⁠— Tor control port
-- `9051` ⁠— Tor [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) proxy and
-- `8888` ⁠— Tor HTTP proxy.
+- `8888` ⁠— Tor HTTP proxy
+- `9050` ⁠— Tor [SOCKS5](https://en.wikipedia.org/wiki/SOCKS) proxy and
+- `9051` ⁠— Tor control.
 
 ### Build
 
@@ -39,13 +39,13 @@ $ make build
 To launch the pre-built image:
 
 ```bash
-docker run -p 8888:8888 -p 9050:9050 --network="host" datawookie/tor-privoxy
+docker run -p 8888:8888 -p 9050:9050 -datawookie/tor-privoxy
 ```
 
 You can also launch the image built from this repository:
 
 ```bash
-docker run -p 8888:8888 -p 9050:9050 --network="host" tor-privoxy
+docker run -p 8888:8888 -p 9050:9050 tor-privoxy
 ```
 
 Or use the `Makefile` as follow:
@@ -75,17 +75,17 @@ To check that you are on Tor:
 # Direct access to internet.
 $ curl http://httpbin.org/ip
 {
-  "origin": "105.224.106.154"
+  "origin": "105.224.106.150"
 }
 # Access internet through Tor (HTTP proxy).
 $ curl --proxy 127.0.0.1:8888 http://httpbin.org/ip
 {
-  "origin": "64.113.32.29"
+  "origin": "185.220.102.4"
 }
 # Access internet through Tor (SOCKS proxy).
 $ curl --proxy socks5://127.0.0.1:9050 http://httpbin.org/ip
 {
-  "origin": "144.217.255.89"
+  "origin": "185.100.87.206"
 }
 ```
 
@@ -104,11 +104,11 @@ Use the requests package to send requests via the Tor proxies.
 ```python
 >>> import requests
 >>> requests.get("http://httpbin.org/ip").json()
-{'origin': '105.224.106.154'}
+{'origin': '105.224.106.150'}
 >>> requests.get("http://httpbin.org/ip", proxies={"http": "http://127.0.0.1:8888"}).json()
-{'origin': '64.113.32.29'}
+{'origin': '185.220.102.4'}
 >>> requests.get("http://httpbin.org/ip", proxies={"http": "socks5://127.0.0.1:9050"}).json()
-{'origin': '144.217.255.89'}
+{'origin': '185.100.87.206'}
 ```
 
 This assumes that you've installed the `requests` module with support for SOCKS5.
@@ -123,15 +123,15 @@ pip3 install -U requests[socks]
 > library(httr)
 > GET("http://httpbin.org/ip")
 {
-  "origin": "105.224.106.154"
+  "origin": "105.224.106.150"
 }
 > GET("http://httpbin.org/ip", use_proxy("http://127.0.0.1:8888"))
 {
-  "origin": "64.113.32.29"
+  "origin": "185.220.102.4"
 }
 > GET("http://httpbin.org/ip", use_proxy("socks5://127.0.0.1:9050"))
 {
-  "origin": "144.217.255.89"
+  "origin": "185.100.87.206"
 }
 ```
 
