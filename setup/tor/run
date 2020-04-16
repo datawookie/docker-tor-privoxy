@@ -2,6 +2,8 @@
 
 TORRC=/opt/tor/torrc
 
+export http_proxy=127.0.0.1:8888
+
 # EXIT NODE LOCATION --------------------------------------------------------------------------------------------------
 
 cat $TORRC
@@ -26,6 +28,21 @@ echo "Refreshing exit IP every ${IP_CHANGE_SECONDS} seconds."
 
 # ---------------------------------------------------------------------------------------------------------------------
 
+exit_node_ip () {
+    wget -q -Y on http://httpbin.org/ip -O - 2>/dev/null| grep origin | sed 's/"//g;s/  origin: //'
+}
+
+# Get current exit node IP address.
+#
+(while true; do sleep 60; echo "`date +'%Y/%m/%d %H:%M:%S'` 📌 exit IP: $(exit_node_ip)."; done) &
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+# Options:
+#
+# - syslog
+# - stdout
+#
 if [ -n "${LOG_NOTICE_TARGET}" ]
 then
     sed -i 's/^\(Log notice\) syslog/\1 '$LOG_NOTICE_TARGET'/' $TORRC
