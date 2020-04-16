@@ -59,6 +59,8 @@ $ make run
 The following environment variables will modify the behaviour of the container:
 
 - `IP_CHANGE_SECONDS` - Number of seconds between changes of Tor exit address.
+- `EXIT_NODE_COUNTRY` - List (comma delimited) of countries for exit node. Use [two letter ISO codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+- `LOG_NOTICE_TARGET` - Where should logging go?
 
 ### Check
 

@@ -1,5 +1,20 @@
 #!/bin/sh
 
+TORRC=/opt/tor/torrc
+
+# EXIT NODE LOCATION --------------------------------------------------------------------------------------------------
+
+cat $TORRC
+
+# Use two letter ISO codes (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+#
+if [ -n "${EXIT_NODE_COUNTRY}" ]
+then
+    sed -i 's/# \(ExitNodes \){US}/\1{'$EXIT_NODE_COUNTRY'}/' $TORRC
+fi
+
+# ---------------------------------------------------------------------------------------------------------------------
+
 if [ -z "${IP_CHANGE_SECONDS}" ]; then IP_CHANGE_SECONDS=60; fi
 #
 echo "Refreshing exit IP every ${IP_CHANGE_SECONDS} seconds."
@@ -7,6 +22,17 @@ echo "Refreshing exit IP every ${IP_CHANGE_SECONDS} seconds."
 # Send the Tor process a HUP signal periodically. This will cause it to get a
 # fresh exit IP address.
 #
-(while true; do sleep ${IP_CHANGE_SECONDS}; echo "🔁 Send HUP to Tor."; killall -HUP tor; done) &
+(while true; do sleep ${IP_CHANGE_SECONDS}; echo "`date +'%Y/%m/%d %H:%M:%S'` 🔁 HUP → Tor."; killall -HUP tor; done) &
 
-exec /bin/su -s /bin/sh -c "/usr/bin/tor -f /opt/tor/torrc" tor
+# ---------------------------------------------------------------------------------------------------------------------
+
+if [ -n "${LOG_NOTICE_TARGET}" ]
+then
+    sed -i 's/^\(Log notice\) syslog/\1 '$LOG_NOTICE_TARGET'/' $TORRC
+fi
+
+cat $TORRC
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+exec /bin/su -s /bin/sh -c "/usr/bin/tor -f $TORRC" tor

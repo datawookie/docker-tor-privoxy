@@ -21,7 +21,9 @@ pull:
 
 run:
 	docker run --rm --name tor \
-    -e IP_CHANGE_SECONDS=300 \
+    -e IP_CHANGE_SECONDS=120 \
+    -e EXIT_NODE_COUNTRY=US \
+    -e LOG_NOTICE_TARGET=stdout \
     -p 127.0.0.1:8888:8888 \
     -p 127.0.0.1:9050:9050 \
     $(IMAGE)

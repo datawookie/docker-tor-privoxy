@@ -11,3 +11,7 @@ CookieAuthentication 1
 Log notice syslog
 #
 # Change 'syslog' to 'stdout' to see more logging in the terminal.
+
+# Are the exit nodes restricted to specific location?
+#
+# ExitNodes {US}
