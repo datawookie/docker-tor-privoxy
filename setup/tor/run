@@ -8,11 +8,10 @@ export http_proxy=127.0.0.1:8888
 
 cat $TORRC
 
-# Use two letter ISO codes (https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
-#
-if [ -n "${EXIT_NODE_COUNTRY}" ]
+if [ -n "${EXIT_NODE}" ]
 then
-    sed -i 's/# \(ExitNodes \){US}/\1{'$EXIT_NODE_COUNTRY'}/' $TORRC
+    sed -i 's/# \(ExitNodes \){US}/\1'$EXIT_NODE'/' $TORRC
+    sed -i 's/# \(StrictNodes\)/\1/' $TORRC
 fi
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -29,7 +28,7 @@ echo "Refreshing exit IP every ${IP_CHANGE_SECONDS} seconds."
 # ---------------------------------------------------------------------------------------------------------------------
 
 exit_node_ip () {
-    wget -q -Y on http://httpbin.org/ip -O - 2>/dev/null| grep origin | sed 's/"//g;s/  origin: //'
+    wget -q -Y on http://httpbin.org/ip -O - 2>/dev/null | grep origin | sed 's/"//g;s/  origin: //'
 }
 
 # Get current exit node IP address.

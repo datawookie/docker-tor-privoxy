@@ -59,7 +59,7 @@ $ make run
 The following environment variables will modify the behaviour of the container:
 
 - `IP_CHANGE_SECONDS` - Number of seconds between changes of Tor exit address.
-- `EXIT_NODE_COUNTRY` - List (comma delimited) of countries for exit node. Use [two letter ISO codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+- `EXIT_NODE`
 - `LOG_NOTICE_TARGET` - Where should logging go?
 
 ### Check
@@ -136,6 +136,18 @@ pip3 install -U requests[socks]
   "origin": "185.100.87.206"
 }
 ```
+
+## Setting Exit Nodes
+
+There are three ways to specify exit nodes:
+
+- using [country codes](https://b3rn3d.herokuapp.com/blog/2014/03/05/tor-country-codes)
+- IP addresses or
+- hashes.
+
+If you want to specify multiple options, use a comma-separated list.
+
+Country codes need to be enclosed in braces, for example, `{us}`.
 
 ## Similar Projects
 

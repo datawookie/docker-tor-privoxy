@@ -15,3 +15,4 @@ Log notice syslog
 # Are the exit nodes restricted to specific location?
 #
 # ExitNodes {US}
+# StrictNodes 1
