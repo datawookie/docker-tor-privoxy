@@ -39,7 +39,7 @@ $ make build
 To launch the pre-built image:
 
 ```bash
-docker run -p 8888:8888 -p 9050:9050 -datawookie/tor-privoxy
+docker run --rm --name tor -p 8888:8888 -p 9050:9050 datawookie/tor-privoxy
 ```
 
 You can also launch the image built from this repository:
@@ -138,6 +138,26 @@ pip3 install -U requests[socks]
 ```
 
 ## Setting Exit Nodes
+
+It's possible to restrict the exit nodes via the configuration in `torrc`.
+
+```
+# Specify exit node by IP address.
+ExitNodes 176.10.99.202
+# Specify exit node by fingerprint.
+ExitNodes 19B6F025B4580795FBD9F3ED3C6574CDAF979A2F
+# Specify exit node by country code.
+ExitNodes {us} StrictNodes 1
+ExitNodes {ua},{ug},{ie} StrictNodes 1
+```
+
+You can also exclude specific nodes.
+
+```
+ExcludeExitNodes {ua} 
+```
+
+Note that `ExcludeExitNodes` takes precedence over `ExitNodes`.
 
 There are three ways to specify exit nodes:
 
