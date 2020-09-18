@@ -1,4 +1,4 @@
-VERSION=0.0.4
+VERSION=0.0.5
 IMAGE=datawookie/tor-privoxy
 
 # IMAGE -----------------------------------------------------------------------
@@ -21,8 +21,8 @@ pull:
 
 run:
 	docker run --rm --name tor \
-    -e IP_CHANGE_SECONDS=120 \
-    -e EXIT_NODE={uk},{ie} \
-    -p 127.0.0.1:8888:8888 \
-    -p 127.0.0.1:9050:9050 \
-    $(IMAGE)
+	-e IP_CHANGE_SECONDS=120 \
+	-e EXIT_NODE={ua},{ug},{uk},{ie} \
+	-p 127.0.0.1:8888:8888 \
+	-p 127.0.0.1:9050:9050 \
+	$(IMAGE):$(VERSION)

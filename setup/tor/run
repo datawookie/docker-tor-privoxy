@@ -17,11 +17,8 @@ fi
 # ---------------------------------------------------------------------------------------------------------------------
 
 if [ -z "${IP_CHANGE_SECONDS}" ]; then IP_CHANGE_SECONDS=60; fi
-#
-echo "Refreshing exit IP every ${IP_CHANGE_SECONDS} seconds."
 
-# Send the Tor process a HUP signal periodically. This will cause it to get a
-# fresh exit IP address.
+# Send the Tor process a HUP signal periodically. This will cause it to get a fresh exit IP address.
 #
 (while true; do sleep ${IP_CHANGE_SECONDS}; echo "`date +'%Y/%m/%d %H:%M:%S'` 🔁 HUP → Tor."; killall -HUP tor; done) &
 
