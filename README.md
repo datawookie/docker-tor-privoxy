@@ -62,6 +62,12 @@ The following environment variables will modify the behaviour of the container:
 - `EXIT_NODE`
 - `LOG_NOTICE_TARGET` - Where should logging go?
 
+For example:
+
+```bash
+docker run -e IP_CHANGE_SECONDS=180 tor-privoxy
+```
+
 ### Check
 
 To check that you are on Tor:
